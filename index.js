@@ -73,13 +73,10 @@ async function join() {
         AgoraRTC.createMicrophoneAudioTrack(),
         AgoraRTC.createCameraVideoTrack()
     ]);
-
     showMuteButton();
-
     // play local video track
     localTracks.videoTrack.play("local-player");
     $("#local-player-name").text(`localVideo(${options.uid})`);
-
     // publish local tracks to channel
     await client.publish(Object.values(localTracks));
     console.log("publish success");
@@ -100,10 +97,8 @@ async function leave() {
     // remove remote users and player views
     remoteUsers = {};
     $("#remote-playerlist").html("");
-
     // leave the channel
     await client.leave();
-
     $("#local-player-name").text("");
     $("#join").attr("disabled", false);
     $("#leave").attr("disabled", true);
@@ -128,7 +123,6 @@ async function subscribe(user, mediaType) {
       `);
             $("#remote-playerlist").append(player);
         }
-
         // play the remote video.
         user.videoTrack.play(`player-${uid}`);
     }
@@ -161,11 +155,13 @@ function hideMuteButton() {
     $("#mic-btn").css("display", "none");
 }
 
+// Display mute button
 function showMuteButton() {
     $("#video-btn").css("display", "inline-block");
     $("#mic-btn").css("display", "inline-block");
 }
 
+// Mute audio function
 async function muteAudio() {
     if (!localTracks.audioTrack) return;
     await localTracks.audioTrack.setEnabled(false);
@@ -176,6 +172,7 @@ async function muteAudio() {
     });
 }
 
+// Mute video function
 async function muteVideo() {
     if (!localTracks.videoTrack) return;
     await localTracks.videoTrack.setEnabled(false);
@@ -183,6 +180,7 @@ async function muteVideo() {
     $("#video-btn").text("Unmute Video");
 }
 
+// Unmute audio function
 async function unmuteAudio() {
     if (!localTracks.audioTrack) return;
     await localTracks.audioTrack.setEnabled(true);
@@ -190,6 +188,7 @@ async function unmuteAudio() {
     $("#mic-btn").text("Mute Audio");
 }
 
+// Unmute video function
 async function unmuteVideo() {
     if (!localTracks.videoTrack) return;
     await localTracks.videoTrack.setEnabled(true);
