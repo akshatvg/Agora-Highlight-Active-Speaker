@@ -8,6 +8,12 @@ var localTracks = {
     videoTrack: null,
     audioTrack: null
 };
+
+var localTrackState = {
+    videoTrackEnabled: true,
+    audioTrackEnabled: true
+}
+
 var remoteUsers = {};
 // Agora client options
 var options = {
@@ -15,15 +21,13 @@ var options = {
     channel: null,
     uid: null,
     token: null
-}
+};
 
-// Join form on submit function
 $("#join-form").submit(async function (e) {
     e.preventDefault();
     $("#join").attr("disabled", true);
     try {
         options.appid = $("#appid").val();
-        options.token = $("#token").val();
         options.channel = $("#channel").val();
         await join();
     } catch (error) {
@@ -31,20 +35,36 @@ $("#join-form").submit(async function (e) {
     } finally {
         $("#leave").attr("disabled", false);
     }
-})
+});
 
-// Leave function
 $("#leave").click(function (e) {
     leave();
+});
+
+$("#mic-btn").click(function (e) {
+    if (localTrackState.audioTrackEnabled) {
+        muteAudio();
+    } else {
+        unmuteAudio();
+    }
+});
+
+$("#video-btn").click(function (e) {
+    if (localTrackState.videoTrackEnabled) {
+        muteVideo();
+    } else {
+        unmuteVideo();
+    }
 })
 
-// Join function
 async function join() {
     $("#mic-btn").prop("disabled", false);
     $("#video-btn").prop("disabled", false);
-    // add event listener to play remote tracks when remote user publishs.
+    // add event listener to play remote tracks when remote users join, publish and leave.
     client.on("user-published", handleUserPublished);
-    client.on("user-unpublished", handleUserUnpublished);
+    client.on("user-joined", handleUserJoined);
+    client.on("user-left", handleUserLeft);
+
     // join a channel and create local tracks, we can use Promise.all to run them concurrently
     [options.uid, localTracks.audioTrack, localTracks.videoTrack] = await Promise.all([
         // join the channel
@@ -53,9 +73,13 @@ async function join() {
         AgoraRTC.createMicrophoneAudioTrack(),
         AgoraRTC.createCameraVideoTrack()
     ]);
+
+    showMuteButton();
+
     // play local video track
     localTracks.videoTrack.play("local-player");
     $("#local-player-name").text(`localVideo(${options.uid})`);
+
     // publish local tracks to channel
     await client.publish(Object.values(localTracks));
     console.log("publish success");
@@ -72,15 +96,19 @@ async function leave() {
             localTracks[trackName] = undefined;
         }
     }
+
     // remove remote users and player views
     remoteUsers = {};
     $("#remote-playerlist").html("");
+
     // leave the channel
     await client.leave();
+
     $("#local-player-name").text("");
     $("#join").attr("disabled", false);
     $("#leave").attr("disabled", true);
-    console.log("client leave channel success");
+    hideMuteButton();
+    console.log("client leaves channel success");
 }
 
 async function subscribe(user, mediaType) {
@@ -88,14 +116,20 @@ async function subscribe(user, mediaType) {
     // subscribe to a remote user
     await client.subscribe(user, mediaType);
     console.log("subscribe success");
+
+    // if the video wrapper element is not exist, create it.
     if (mediaType === 'video') {
-        const player = $(`
-      <div id="player-wrapper-${uid}">
-        <p class="player-name">remoteUser(${uid})</p>
-        <div id="player-${uid}" class="player"></div>
-      </div>
-    `);
-        $("#remote-playerlist").append(player);
+        if ($(`#player-wrapper-${uid}`).length === 0) {
+            const player = $(`
+        <div id="player-wrapper-${uid}" class="col col-xl-6">
+          <p class="player-name">remoteUser(${uid})</p>
+          <div id="player-${uid}" class="player"></div>
+        </div>
+      `);
+            $("#remote-playerlist").append(player);
+        }
+
+        // play the remote video.
         user.videoTrack.play(`player-${uid}`);
     }
     if (mediaType === 'audio') {
@@ -103,64 +137,88 @@ async function subscribe(user, mediaType) {
     }
 }
 
-// Handle user publish
-function handleUserPublished(user, mediaType) {
+// Handle user join
+function handleUserJoined(user) {
     const id = user.uid;
     remoteUsers[id] = user;
-    subscribe(user, mediaType);
 }
 
-// Handle user unpublish
-function handleUserUnpublished(user) {
+// Handle user leave
+function handleUserLeft(user) {
     const id = user.uid;
     delete remoteUsers[id];
     $(`#player-wrapper-${id}`).remove();
 }
 
-// Initialise UI controls
-enableUiControls();
+// Handle user published
+function handleUserPublished(user, mediaType) {
+    subscribe(user, mediaType);
+}
 
-// Action buttons
-function enableUiControls() {
-    $("#mic-btn").click(function () {
-        toggleMic();
-    });
-    $("#video-btn").click(function () {
-        toggleVideo();
+// Hide mute button
+function hideMuteButton() {
+    $("#video-btn").css("display", "none");
+    $("#mic-btn").css("display", "none");
+}
+
+function showMuteButton() {
+    $("#video-btn").css("display", "inline-block");
+    $("#mic-btn").css("display", "inline-block");
+}
+
+async function muteAudio() {
+    if (!localTracks.audioTrack) return;
+    await localTracks.audioTrack.setEnabled(false);
+    localTrackState.audioTrackEnabled = false;
+    $("#mic-btn").text("Unmute Audio");
+    $("#local-player").css({
+        "box-shadow": "none"
     });
 }
 
-// Toggle Mic
-function toggleMic() {
-    if ($("#mic-icon").hasClass('fa-microphone')) {
-        localTracks.audioTrack.setEnabled(false);
-        console.log("Audio Muted.");
-    } else {
-        localTracks.audioTrack.setEnabled(true);
-        console.log("Audio Unmuted.");
-    }
-    $("#mic-icon").toggleClass('fa-microphone').toggleClass('fa-microphone-slash');
+async function muteVideo() {
+    if (!localTracks.videoTrack) return;
+    await localTracks.videoTrack.setEnabled(false);
+    localTrackState.videoTrackEnabled = false;
+    $("#video-btn").text("Unmute Video");
 }
 
-// Toggle Video
-function toggleVideo() {
-    if ($("#video-icon").hasClass('fa-video')) {
-        localTracks.videoTrack.setEnabled(false);
-        console.log("Video Muted.");
-    } else {
-        localTracks.videoTrack.setEnabled(true);
-        console.log("Video Unmuted.");
-    }
-    $("#video-icon").toggleClass('fa-video').toggleClass('fa-video-slash');
+async function unmuteAudio() {
+    if (!localTracks.audioTrack) return;
+    await localTracks.audioTrack.setEnabled(true);
+    localTrackState.audioTrackEnabled = true;
+    $("#mic-btn").text("Mute Audio");
+}
+
+async function unmuteVideo() {
+    if (!localTracks.videoTrack) return;
+    await localTracks.videoTrack.setEnabled(true);
+    localTrackState.videoTrackEnabled = true;
+    $("#video-btn").text("Mute Video");
 }
 
 // Find active speakers
 client.enableAudioVolumeIndicator();
 client.on("volume-indicator", volumes => {
-    volumes.forEach((volume, index) => {
-        console.log(`${index} UID ${volume.uid} Level ${volume.level}`);
-        $("#player-" + volume.uid).css({
-            "box-shadow": "0 2px 4px 0 #0C9DFD, 0 2px 5px 0 #0C9DFD"
-        });
+    volumes.forEach((volume) => {
+        console.log(`UID ${volume.uid} Level ${volume.level}`);
+        if (options.uid == volume.uid && volume.level > 2) {
+            $("#local-player").css({
+                "box-shadow": "0 2px 4px 0 #0C9DFD, 0 2px 5px 0 #0C9DFD"
+            });
+        } else if (options.uid == volume.uid && volume.level < 2) {
+            $("#local-player").css({
+                "box-shadow": "none"
+            });
+        }
+        if (options.uid != volume.uid && volume.level > 2) {
+            $("#player-" + volume.uid).css({
+                "box-shadow": "0 2px 4px 0 #0C9DFD, 0 2px 5px 0 #0C9DFD"
+            });
+        } else if (options.uid != volume.uid && volume.level < 2) {
+            $("#player-" + volume.uid).css({
+                "box-shadow": "none"
+            });
+        }
     });
 })

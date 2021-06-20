@@ -63,7 +63,7 @@
     <div class="container mt-5 mb-5">
         <!-- Form for joining and leaving -->
         <form id="join-form">
-            <div class="row join-info-group">
+            <div class="row">
                 <div class="col-sm">
                     <p class="join-info-text">AppID</p>
                     <input id="appid" type="text" placeholder="Enter AppID" required class="form-control">
@@ -81,10 +81,10 @@
             <div class="button-group mt-2">
                 <button id="join" type="submit" class="btn btn-sm">Join</button>
                 <button id="mic-btn" type="button" class="btn btn-sm" disabled>
-                    <i id="mic-icon" class="fa fa-microphone"></i>
+                    Mute Audio
                 </button>
                 <button id="video-btn" type="button" class="btn btn-sm" disabled>
-                    <i id="video-icon" class="fa fa-video"></i>
+                    Mute Video
                 </button>
                 <button id="leave" type="button" class="btn btn-sm" disabled>Leave</button>
             </div>
@@ -99,9 +99,7 @@
                     </div>
                     <div class="w-100"></div>
                     <!-- Remote Players -->
-                    <div class="col">
-                        <div id="remote-playerlist"></div>
-                    </div>
+                    <div id="remote-playerlist" class="row justify-content-center"></div>
                 </div>
             </div>
         </div>
@@ -114,7 +112,7 @@
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous">
     </script>
     <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
-    <script src="./main.js"></script>
+    <script src="./index.js"></script>
 
 </body>
 
