@@ -205,16 +205,16 @@ client.on("volume-indicator", volumes => {
             $("#local-player").css({
                 "box-shadow": "0 2px 4px 0 #0C9DFD, 0 2px 5px 0 #0C9DFD"
             });
-        } else if (options.uid == volume.uid && volume.level < 2) {
+        } else if (options.uid == volume.uid && volume.level < 5) {
             $("#local-player").css({
                 "box-shadow": "none"
             });
         }
-        if (options.uid != volume.uid && volume.level > 2) {
+        if (options.uid != volume.uid && volume.level > 5) {
             $("#player-" + volume.uid).css({
                 "box-shadow": "0 2px 4px 0 #0C9DFD, 0 2px 5px 0 #0C9DFD"
             });
-        } else if (options.uid != volume.uid && volume.level < 2) {
+        } else if (options.uid != volume.uid && volume.level < 5) {
             $("#player-" + volume.uid).css({
                 "box-shadow": "none"
             });
