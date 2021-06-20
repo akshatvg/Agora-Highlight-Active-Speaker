@@ -26,7 +26,7 @@ Video call sample application which highlights the active speaker.
 - [Agora.io Website](https://www.agora.io/)
 - [SDK NG Documentation](https://agoraio-community.github.io/AgoraWebSDK-NG/api/en/index.html)
 - [Sample Video Call App](https://github.com/AgoraIO-Community/AgoraWebSDK-NG/tree/master/Demo/basicVideoCall)
-- [Guided Blog](#!)
+- [Guided Blog](https://medium.com/@akshatvg/highlighting-the-active-speaker-s-during-a-group-video-call-6106a04de87)
 
 ## Requirements
 
