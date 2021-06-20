@@ -201,7 +201,7 @@ client.enableAudioVolumeIndicator();
 client.on("volume-indicator", volumes => {
     volumes.forEach((volume) => {
         console.log(`UID ${volume.uid} Level ${volume.level}`);
-        if (options.uid == volume.uid && volume.level > 2) {
+        if (options.uid == volume.uid && volume.level > 5) {
             $("#local-player").css({
                 "box-shadow": "0 2px 4px 0 #0C9DFD, 0 2px 5px 0 #0C9DFD"
             });
