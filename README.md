@@ -1,33 +1,42 @@
-# Repo Name
+# Agora Highlight Active Speaker
 
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/akshatvg/<Repo>?logo=github&style=social)](https://github.com/akshatvg/) [![GitHub last commit](https://img.shields.io/github/last-commit/akshatvg/<Repo>?style=social&logo=git)](https://github.com/akshatvg/) [![GitHub stars](https://img.shields.io/github/stars/akshatvg/<Repo>?style=social)](https://github.com/akshatvg/<Repo>/stargazers) [![GitHub forks](https://img.shields.io/github/forks/akshatvg/<Repo>?style=social&logo=git)](https://github.com/akshatvg/<Repo>/network)
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/akshatvg/Agora-Highlight-Active-Speaker?logo=github&style=social)](https://github.com/akshatvg/) [![GitHub last commit](https://img.shields.io/github/last-commit/akshatvg/Agora-Highlight-Active-Speaker?style=social&logo=git)](https://github.com/akshatvg/) [![GitHub stars](https://img.shields.io/github/stars/akshatvg/Agora-Highlight-Active-Speaker?style=social)](https://github.com/akshatvg/Agora-Highlight-Active-Speaker/stargazers) [![GitHub forks](https://img.shields.io/github/forks/akshatvg/Agora-Highlight-Active-Speaker?style=social&logo=git)](https://github.com/akshatvg/Agora-Highlight-Active-Speaker/network)
 
-Project description comes here.
+Video call sample application which highlights the active speaker.
 
 <p align="center">
-<a href="#!">
-<img src="https://github.com/akshatvg/<Repo>/blob/master/Assets/app-icon-64%402x.png" width="120px" height="120px" alt="<Repo> Logo"/>
+<a href="https://activespeaker.akshatvg.com/">
+<img src="./favicon.png" width="60px" alt="Agora.io"/>
 </a>
 </p>
 
-![Generic badge](https://img.shields.io/badge/Random-Swag-orange) 
+![Generic badge](https://img.shields.io/badge/Highlight-Active_Speaker-orange) 
 
-#### Link for [demo](#!) 
-[![Generic badge](https://img.shields.io/badge/view-demo-orange)](#!)
+[![Generic badge](https://img.shields.io/badge/view-demo-purple)](https://activespeaker.akshatvg.com/)
+
+## Features
+
+- Video call
+- Highlight active speaker with a `box-shadow`
+- Mute and unmute user audio and video
 
 ## Useful Links
 
-- [Actual Website](#!)
+- [Deployed Website](https://activespeaker.akshatvg.com/)
+- [Agora.io Website](https://www.agora.io/)
+- [SDK NG Documentation](https://agoraio-community.github.io/AgoraWebSDK-NG/api/en/index.html)
+- [Sample Video Call App](https://github.com/AgoraIO-Community/AgoraWebSDK-NG/tree/master/Demo/basicVideoCall)
+- [Guided Blog](#!)
 
 ## Requirements
 
-[![GitHub top language](https://img.shields.io/github/languages/top/akshatvg/<Repo>?logo=javascript&style=social)](https://github.com/akshatvg/)
+[![GitHub top language](https://img.shields.io/github/languages/top/akshatvg/Agora-Highlight-Active-Speaker?logo=javascript&style=social)](https://github.com/akshatvg/)
 
-The source code of this project is written in **`HTML/CSS/JS`**. So, you do not require anything extra to run this project.
+The source code of this project is written in **`HTML`, `CSS`, `JavaScript`**, and the **`Agora SDK NG`**. So, you would require the Agora SDKs and a valid App Id to run this project.
 
 ## Instructions
 
-[![chrome](https://img.shields.io/badge/Open-index.html-lightgrey.svg?logo=google-chrome&style=popout&logoColor=red)](#!)
+[![chrome](https://img.shields.io/badge/Open-index.html-lightgrey.svg?logo=google-chrome&style=popout&logoColor=red)](https://activespeaker.akshatvg.com/)
 
 Extract the folder and run `index.html`
 
@@ -43,9 +52,6 @@ Invite me to connect on [LinkedIn](https://www.linkedin.com/in/akshatvg/).
 
 
 ```bash
-
-
-
  _____ _                 _     __   __            
 |_   _| |               | |    \ \ / /            
   | | | |__   __ _ _ __ | | __  \ V /___  _   _   
@@ -70,17 +76,13 @@ ______      _               _   _               _
 \____/ \___|_|_| |_|\__, | \_| |_/\___|_|  \___(_)
                      __/ |                        
                     |___/                         
-
- 
-
-
 ```
 
 ## License
 
-**MIT &copy; [Akshat Gupta](https://github.com/akshatvg/<Repo>/blob/master/LICENSE)**
+**MIT &copy; [Akshat Gupta](https://github.com/akshatvg/Agora-Highlight-Active-Speaker/blob/master/LICENSE)**
 
-[![GitHub license](https://img.shields.io/github/license/akshatvg/<Repo>?style=social&logo=github)](https://github.com/akshatvg/<Repo>/blob/master/LICENSE) [![Twitter Follow](https://img.shields.io/twitter/follow/akshatvg?style=social)](https://twitter.com/akshatvg)
+[![GitHub license](https://img.shields.io/github/license/akshatvg/Agora-Highlight-Active-Speaker?style=social&logo=github)](https://github.com/akshatvg/Agora-Highlight-Active-Speaker/blob/master/LICENSE) [![Twitter Follow](https://img.shields.io/twitter/follow/akshatvg?style=social)](https://twitter.com/akshatvg)
 
 ---------
 
@@ -93,4 +95,3 @@ if (youEnjoyed) {
 ```
 
 -----------
-
